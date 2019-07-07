@@ -2,7 +2,6 @@ import React from "react"
 import "./QuestionCard.css"
 import QuestionHTML from "./QuestionHTML"
 import AnswerInput from "./AnswerInput"
-import { async } from "q"
 
 class QuestionCard extends React.Component {
     constructor(props) {
@@ -17,15 +16,24 @@ class QuestionCard extends React.Component {
         }
     }
 
-    componentDidMount() {
-        if (this.mathJaxReady()) {
-            window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub])
+    componentWillMount() {
+        // Import the questions that are already completed
+        let completed = localStorage.getItem("completed")
+        completed = JSON.parse(completed)
+        if (completed) {
+            this.setState({ questions_completed: completed })
         }
 
         this.get_question().then(json => {
             console.log(json)
             this.setState(json)
         })
+    }
+
+    componentDidMount() {
+        if (this.mathJaxReady()) {
+            window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub])
+        }
     }
 
     componentDidUpdate() {
@@ -55,6 +63,7 @@ class QuestionCard extends React.Component {
         if (this.state.answers.includes(input)) {
             this.setState((state, props) => {
                 let completed = state.questions_completed.concat([state.id])
+                localStorage.setItem("completed", JSON.stringify(completed))
                 return {
                     correct: true,
                     questions_completed: completed,
