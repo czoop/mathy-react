@@ -11,6 +11,8 @@ completed: [] -- A list of all the completed question ids
 
 */
 
+app.use("/", express.static("build"))
+
 app.get("/question", (req, res) => {
     let completed = req.query.completed ? req.query.completed : []
 

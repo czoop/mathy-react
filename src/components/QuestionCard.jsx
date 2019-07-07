@@ -16,7 +16,7 @@ class QuestionCard extends React.Component {
         }
     }
 
-    componentWillMount() {
+    componentDidMount() {
         // Import the questions that are already completed
         let completed = localStorage.getItem("completed")
         completed = JSON.parse(completed)
@@ -24,23 +24,18 @@ class QuestionCard extends React.Component {
             this.setState({ questions_completed: completed })
         }
 
-        this.get_question().then(json => {
-            console.log(json)
-            this.setState(json)
-        })
-    }
+        this.next_question()
 
-    componentDidMount() {
         if (this.mathJaxReady()) {
             window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub])
         }
     }
 
-    componentDidUpdate() {
-        if (this.mathJaxReady()) {
-            window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub])
-        }
-    }
+    // componentDidUpdate() {
+    //     if (this.mathJaxReady()) {
+    //         window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub])
+    //     }
+    // }
 
     mathJaxReady() {
         return "MathJax" in window && "Hub" in window.MathJax
