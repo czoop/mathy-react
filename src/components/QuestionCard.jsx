@@ -31,11 +31,11 @@ class QuestionCard extends React.Component {
         }
     }
 
-    // componentDidUpdate() {
-    //     if (this.mathJaxReady()) {
-    //         window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub])
-    //     }
-    // }
+    componentDidUpdate() {
+        if (this.mathJaxReady()) {
+            window.MathJax.Hub.Queue(["Typeset", window.MathJax.Hub])
+        }
+    }
 
     mathJaxReady() {
         return "MathJax" in window && "Hub" in window.MathJax
